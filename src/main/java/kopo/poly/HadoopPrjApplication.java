@@ -75,7 +75,7 @@ public class HadoopPrjApplication implements CommandLineRunner {
 
         String text = "10.223.157.186";
 
-        Pattern IPv4_PATTERN = Pattern.compile("10.223.[0-9]{1,3}.[0-9]{1,3}");
+        Pattern IPv4_PATTERN = Pattern.compile("10\\.223\\.[0-9]{1,3}\\.[0-9]{1,3}");
 
         if (IPv4_PATTERN.matcher(text).matches()) {
 //        if (Pattern.matches("", text)) {

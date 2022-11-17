@@ -1,11 +1,10 @@
 package kopo.poly.service.impl;
 
 import kopo.poly.dto.HadoopDTO;
-import kopo.poly.service.IAccessLogUploadService;
+import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.IGzFileService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.log4j.Log4j2;
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,9 +16,7 @@ import java.util.zip.GZIPInputStream;
 
 @Log4j2
 @Service
-public class GzFileService implements IGzFileService {
-
-
+public class GzFileService extends AbstractHadoopConf implements IGzFileService {
 
     @Override
     public String readLocalGzFile(HadoopDTO pDTO) throws Exception {

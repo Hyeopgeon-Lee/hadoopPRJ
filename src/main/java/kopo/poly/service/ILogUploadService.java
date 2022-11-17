@@ -6,8 +6,4 @@ public interface ILogUploadService {
 
     String readLocalGzFileIP(HadoopDTO pDTO) throws Exception;
 
-    void uploadIP(HadoopDTO pDTO) throws Exception;
-
-    String readHadoopFile(HadoopDTO pDTO) throws Exception;
-
 }

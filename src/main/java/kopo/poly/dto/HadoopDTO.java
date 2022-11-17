@@ -26,6 +26,6 @@ public class HadoopDTO {
     String fileContents;
 
     // 정규식 표현
-    String exp;
+    String regExp;
 
 }
