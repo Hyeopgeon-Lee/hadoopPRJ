@@ -47,7 +47,7 @@ public class LogUploadService extends AbstractHadoopConf implements ILogUploadSe
 
             String line; // 읽은 라인의 값이 저장되는 변수
 
-            String exp = CmmUtil.nvl(pDTO.getExp()); //정규식 표현식
+            String exp = CmmUtil.nvl(pDTO.getRegExp()); //정규식 표현식
             log.info("exp : " + exp); // 예 : 10\.223\.[0-9]{1,3}\.[0-9]{1,3} => 10.56.xxx.xxx 값만 찾음
 
             while ((line = lineReader.readLine()) != null) {
@@ -85,15 +85,5 @@ public class LogUploadService extends AbstractHadoopConf implements ILogUploadSe
 
         return result;
 
-    }
-
-    @Override
-    public void uploadIP(HadoopDTO pDTO) throws Exception {
-
-    }
-
-    @Override
-    public String readHadoopFile(HadoopDTO pDTO) throws Exception {
-        return null;
     }
 }

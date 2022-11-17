@@ -105,9 +105,6 @@ public class GzFileService extends AbstractHadoopConf implements IGzFileService 
         // CentOS에 설치된 하둡 분산 파일 시스템 연결 및 설정하기
         hdfs = FileSystem.get(this.getHadoopConfiguration());
 
-        log.info("HDFS Home Dir : " + hdfs.getHomeDirectory());
-        log.info("HDFS Working Dir : " + hdfs.getWorkingDirectory());
-
         // 하둡에 파일을 업로드할 폴더
         // 예 : /01/02
         String hadoopUploadFilePath = CmmUtil.nvl(pDTO.getHadoopUploadPath());
@@ -122,8 +119,7 @@ public class GzFileService extends AbstractHadoopConf implements IGzFileService 
 
         // 하둡분산파일시스템에 저장될 파일경로 및 폴더명
         // 예 : hadoop fs -put access_log.gz /01/02/access_log.gz
-        String hadoopFile = CmmUtil.nvl(pDTO.getHadoopUploadPath())
-                + "/" + CmmUtil.nvl(pDTO.getHadoopUploadFileName());
+        String hadoopFile = hadoopUploadFilePath + "/" + hadoopUploadFileName;
 
         // 하둡분산파일시스템에 저장가능한 객체로 변환
         Path path = new Path(hadoopFile);

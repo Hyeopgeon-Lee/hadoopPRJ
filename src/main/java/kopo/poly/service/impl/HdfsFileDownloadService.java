@@ -2,7 +2,7 @@ package kopo.poly.service.impl;
 
 import kopo.poly.dto.HadoopDTO;
 import kopo.poly.service.AbstractHadoopConf;
-import kopo.poly.service.IAccessLogUploadService;
+import kopo.poly.service.IHdfsFileDownloadService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.hadoop.fs.FileSystem;
@@ -13,12 +13,12 @@ import java.io.IOException;
 
 @Log4j2
 @Service
-public class AccessLogUploadService extends AbstractHadoopConf implements IAccessLogUploadService {
+public class HdfsFileDownloadService extends AbstractHadoopConf implements IHdfsFileDownloadService {
 
     @Override
-    public void uploadFile(HadoopDTO pDTO) throws Exception {
+    public void downloadFile(HadoopDTO pDTO) throws Exception {
 
-        log.info(this.getClass().getName() + ".uploadFile Start!");
+        log.info(this.getClass().getName() + ".downloadFile Start!");
 
         // 하둡 분산 파일 시스템 객체
         FileSystem hdfs = null;
@@ -27,17 +27,13 @@ public class AccessLogUploadService extends AbstractHadoopConf implements IAcces
             // CentOS에 설치된 하둡 분산 파일 시스템 연결 및 설정하기
             hdfs = FileSystem.get(this.getHadoopConfiguration());
 
-            // 하둡에 파일을 업로드할 폴더
+            // 다운로드하기 위한 하둡에 저장된 파일의 폴더
             // 예 : /01/02
             String hadoopUploadFilePath = CmmUtil.nvl(pDTO.getHadoopUploadPath());
 
-            // 하둡에 업로드할 파일명
+            // 다운로드하기 위한 하둡에 저장된 파일명
             // 예 : access_log.gz
             String hadoopUploadFileName = CmmUtil.nvl(pDTO.getHadoopUploadFileName());
-
-            // 하둡에 폴더 생성하기
-            // hadoop fs -mkdir -p /01/02
-            hdfs.mkdirs(new Path(hadoopUploadFilePath));
 
             // 하둡분산파일시스템에 저장될 파일경로 및 폴더명
             // 예 : hadoop fs -put access_log.gz /01/02/access_log.gz
@@ -51,22 +47,17 @@ public class AccessLogUploadService extends AbstractHadoopConf implements IAcces
 
             if (hdfs.exists(path)) { // 하둡분산파일시스템에 파일 존재하면...
 
-                // 기존 업로드되어 있는 파일 삭제하기
-                // hadoop fs -rm -r /01/02/access_log.gz
-                hdfs.delete(path, true);
+
+                // 다운르도 파일명 예 : c:/hadoop_data/hdfs_access_log.gz
+                Path localPath = new Path(
+                        CmmUtil.nvl(pDTO.getLocalUploadPath()) +
+                                "/" + CmmUtil.nvl(pDTO.getLocalUploadFileName()));
+
+                // 업로드된 파일 다운로드하기
+                // hadoop fs -get /01/02/access_log.gz c:/hadoop_data/hdfs_access_log.gz
+                hdfs.copyToLocalFile(path, localPath);
 
             }
-
-            // 예 : c:/hadoop_data/access_log.gz
-            Path localPath = new Path(
-                    CmmUtil.nvl(pDTO.getLocalUploadPath()) +
-                            "/" + CmmUtil.nvl(pDTO.getLocalUploadFileName()));
-
-            // 파일 업로드
-            // 예 : hadoop fs -put c:/data/access_log.gz /01/02/access_log.gz
-            hdfs.copyFromLocalFile(localPath, path);
-
-            log.info("Local File Upload Finished!!");
 
         } catch (IOException e) {
             log.info(e.getMessage());
@@ -76,7 +67,8 @@ public class AccessLogUploadService extends AbstractHadoopConf implements IAcces
                 hdfs.close();
 
             }
-            log.info(this.getClass().getName() + ".uploadFile End!");
+            log.info(this.getClass().getName() + ".downloadFile End!");
         }
     }
+
 }
