@@ -2,7 +2,7 @@ package kopo.poly.component.impl;
 
 import kopo.poly.component.IHdfsExam;
 import kopo.poly.dto.HadoopDTO;
-import kopo.poly.service.IAccessLogUploadService;
+import kopo.poly.service.impl.HdfsFileUploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Log4j2
 @RequiredArgsConstructor
 @Component
-public class AccessLogUploadExam implements IHdfsExam {
+public class Exam01 implements IHdfsExam {
 
     // access_log.gz 업로드 실습용 서비스(비즈니스 로직)
-    private final IAccessLogUploadService accessLogUploadService;
+    private final HdfsFileUploadService hdfsFileUploadService;
 
     @Override
     public void doExam() throws Exception {
@@ -32,7 +32,7 @@ public class AccessLogUploadExam implements IHdfsExam {
         pDTO.setLocalUploadPath("c:/hadoop_data");
         pDTO.setLocalUploadFileName("access_log.gz");
 
-        accessLogUploadService.uploadFile(pDTO);
+        hdfsFileUploadService.uploadHdfsFile(pDTO);
 
     }
 }

@@ -14,8 +14,9 @@ import org.springframework.stereotype.Component;
 @Log4j2
 @RequiredArgsConstructor
 @Component
-public class HdfsFileDownloadExam implements IHdfsExam {
+public class Exam04 implements IHdfsExam {
 
+    // HDFS에 저장된 파일 다운로드 서비스
     private final IHdfsFileDownloadService hdfsFileDownloadService;
 
     @Override
