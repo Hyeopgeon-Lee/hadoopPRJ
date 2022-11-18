@@ -8,6 +8,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
@@ -16,7 +18,7 @@ import java.util.zip.GZIPInputStream;
 public class LocalGzFileReadService extends AbstractHadoopConf implements ILocalGzFileReadService {
 
     @Override
-    public String readLocalGzFileCnt(HadoopDTO pDTO) throws Exception {
+    public List<String> readLocalGzFileCnt(HadoopDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + ".readLocalGzFile Start!");
 
         String result = ""; // GzFile 내용 결과
@@ -24,6 +26,8 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
         long readCnt = pDTO.getLineCnt();
 
         log.info("readCnt : " + readCnt);
+
+        List<String> logList = new ArrayList<>(); //로그 정보를 저장할 객체
 
         // 예 : c:/hadoop_data/access_log.gz
         String localFile = CmmUtil.nvl(pDTO.getLocalUploadPath()) +
@@ -54,7 +58,8 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
             String line; // 읽은 라인의 값이 저장되는 변수
 
             while ((line = lineReader.readLine()) != null) {
-                gzContents.append(line + "\n"); //읽은 라인
+
+                logList.add(line);
 
                 idx++; // 읽은 라인 횟수 세기
 
@@ -65,7 +70,7 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
             }
 
             // 읽은 전체 내용을 String 타입으로 변경하기
-            result = gzContents.toString();
+//            result = gzContents.toString();
 
         } catch (IOException e) {
             throw new RuntimeException("Gzip 파일 읽기 실패했습니다.", e);
@@ -83,11 +88,11 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
 
         log.info(this.getClass().getName() + ".readLocalGzFile End!");
 
-        return result;
+        return logList;
     }
 
     @Override
-    public String readLocalGzFileIP(HadoopDTO pDTO) throws Exception {
+    public List<String> readLocalGzFileIP(HadoopDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + ".readLocalGzFile Start!");
 
         String result = ""; // GzFile 내용 결과
@@ -97,6 +102,8 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
                 "/" + CmmUtil.nvl(pDTO.getLocalUploadFileName());
 
         log.info("localFile : " + localFile);
+
+        List<String> logList = new ArrayList<>(); //로그 정보를 저장할 객체
 
         // Gz 파일 가져오기
         File localGzFile = new File(localFile);
@@ -130,7 +137,9 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
                 // 자바 정규식은 CentOS의 grep 명령어와 달리 비교대상과 정규식 패턴이 일치해야만 탐지 가능
                 // 즉, 로그에서 IP를 추출하고, 그 IP에 대한 정규식 패턴이 맞는지 체크함
                 if (Pattern.matches(exp, ip)) {
-                    gzContents.append(line + "\n"); // 비교는 IP랑 하지만 실제 HDFS에 업로드내용은 한줄 전체
+                    logList.add(line);
+
+//                    gzContents.append(line + "\n"); // 비교는 IP랑 하지만 실제 HDFS에 업로드내용은 한줄 전체
 
                 }
             }
@@ -154,6 +163,6 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
 
         log.info(this.getClass().getName() + ".readLocalGzFile End!");
 
-        return result;
+        return logList;
     }
 }

@@ -34,7 +34,7 @@ public class Exam04 implements IHdfsExam {
         pDTO.setLocalUploadPath("c:/hadoop_data");
         pDTO.setLocalUploadFileName("hdfs_access_log.gz");
 
-        hdfsFileDownloadService.downloadFile(pDTO);
+        hdfsFileDownloadService.downloadHdfsFile(pDTO);
 
         pDTO = null;
 

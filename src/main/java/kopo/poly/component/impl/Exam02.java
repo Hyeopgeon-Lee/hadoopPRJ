@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 실습 내용
  * 1. Gz로 압축된 파일 최초 10줄만 읽기 실습
@@ -44,7 +46,7 @@ public class Exam02 implements IHdfsExam {
         pDTO.setLineCnt(10); // 읽을 라인 수
 
         // 최초 등록된 로그 10줄 일기
-        String line10 = localGzFileReadService.readLocalGzFileCnt(pDTO);
+        List<String> line10 = localGzFileReadService.readLocalGzFileCnt(pDTO);
 
         pDTO = null;
 
@@ -58,7 +60,7 @@ public class Exam02 implements IHdfsExam {
         // 하둡에 생성할 파일 정보
         pDTO.setHadoopUploadPath("/01/02"); // 하둡분산파일시스템 업로드 폴더
         pDTO.setHadoopUploadFileName("line10.log"); // 하둡분산파일시스템 업로드 파일
-        pDTO.setFileContents(line10); // 하둡분산파일시스템 업로드 파일에 작성될 내용
+        pDTO.setContentList(line10); // 하둡분산파일시스템 업로드 파일에 작성될 내용
 
         // 파일 내용 업로드하기
         hdfsFileUploadService.uploadHdfsFileContents(pDTO);

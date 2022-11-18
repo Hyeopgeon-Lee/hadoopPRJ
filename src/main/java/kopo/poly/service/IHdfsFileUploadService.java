@@ -17,3 +17,4 @@ public interface IHdfsFileUploadService {
     void uploadHdfsFileContents(HadoopDTO pDTO) throws Exception;
 
 }
+

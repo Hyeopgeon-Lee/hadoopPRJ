@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 실습 내용
  * 1. Gz로 압축된 파일 내용 중 10.56.xxx.xxx 로그만 올리기
@@ -43,7 +45,7 @@ public class Exam03 implements IHdfsExam {
         pDTO.setLocalUploadFileName("access_log.gz");
         pDTO.setRegExp("10\\.223\\.[0-9]{1,3}\\.[0-9]{1,3}"); // 10.56.xxx.xxx 찾기
 
-        String ipLog = localGzFileReadService.readLocalGzFileIP(pDTO);
+        List<String> ipLog = localGzFileReadService.readLocalGzFileIP(pDTO);
 
         pDTO = null;
 
@@ -57,7 +59,7 @@ public class Exam03 implements IHdfsExam {
         // 하둡에 생성할 파일 정보
         pDTO.setHadoopUploadPath("/01/02"); // 하둡분산파일시스템 업로드 폴더
         pDTO.setHadoopUploadFileName("10.56.xxx.xxx.log"); // 하둡분산파일시스템 업로드 파일
-        pDTO.setFileContents(ipLog); // 하둡분산파일시스템 업로드 파일에 작성될 내용
+        pDTO.setContentList(ipLog);; // 하둡분산파일시스템 업로드 파일에 작성될 내용
 
         // HDFS에 파일업로드
         hdfsFileUploadService.uploadHdfsFileContents(pDTO);

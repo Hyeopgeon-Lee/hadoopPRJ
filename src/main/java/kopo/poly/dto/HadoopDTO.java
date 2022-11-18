@@ -3,6 +3,8 @@ package kopo.poly.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class HadoopDTO {
@@ -23,7 +25,7 @@ public class HadoopDTO {
     long lineCnt;
 
     // GZ 파일 내용
-    String fileContents;
+    List<String> contentList;
 
     // 정규식 표현
     String regExp;
