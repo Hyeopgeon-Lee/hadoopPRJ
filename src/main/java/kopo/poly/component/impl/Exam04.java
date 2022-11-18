@@ -26,9 +26,9 @@ public class Exam04 implements IHdfsExam {
 
         HadoopDTO pDTO = new HadoopDTO();
 
-        // 내컴퓨터에 존재하는 업로드할 파일 정보
-        pDTO.setLocalUploadPath("c:/hadoop_data");
-        pDTO.setLocalUploadFileName("access_log.gz");
+        // 하둡에 저장될 파일 정보
+        pDTO.setHadoopUploadPath("/01/02");
+        pDTO.setHadoopUploadFileName("access_log.gz");
 
         // 내컴퓨터에 존재하는 업로드할 파일 정보
         pDTO.setLocalUploadPath("c:/hadoop_data");

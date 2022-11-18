@@ -31,3 +31,4 @@ public class HadoopDTO {
     String regExp;
 
 }
+

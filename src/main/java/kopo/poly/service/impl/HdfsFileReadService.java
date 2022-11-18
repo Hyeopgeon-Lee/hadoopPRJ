@@ -18,7 +18,7 @@ public class HdfsFileReadService extends AbstractHadoopConf
     @Override
     public String readHdfsFile(HadoopDTO pDTO) throws Exception {
 
-        log.info(this.getClass().getName() + ".upload10Line Start!");
+        log.info(this.getClass().getName() + ".readHdfsFile Start!");
 
         // 하둡 분산 파일 시스템 객체
         FileSystem hdfs = FileSystem.get(this.getHadoopConfiguration());
@@ -44,7 +44,7 @@ public class HdfsFileReadService extends AbstractHadoopConf
 
         }
 
-        log.info(this.getClass().getName() + ".upload10Line End!");
+        log.info(this.getClass().getName() + ".readHdfsFile End!");
 
         return readLog;
     }

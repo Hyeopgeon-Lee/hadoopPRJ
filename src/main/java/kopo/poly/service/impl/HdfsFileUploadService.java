@@ -125,9 +125,7 @@ public class HdfsFileUploadService extends AbstractHadoopConf
         });
         outputStream.close();
 
-
         log.info(this.getClass().getName() + ".uploadHdfsFileContents End!");
-
     }
-
 }
+

@@ -1,7 +1,6 @@
 package kopo.poly.service.impl;
 
 import kopo.poly.dto.HadoopDTO;
-import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.ILocalGzFileReadService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.log4j.Log4j2;
@@ -15,16 +14,15 @@ import java.util.zip.GZIPInputStream;
 
 @Log4j2
 @Service
-public class LocalGzFileReadService extends AbstractHadoopConf implements ILocalGzFileReadService {
+public class LocalGzFileReadService implements ILocalGzFileReadService {
 
     @Override
     public List<String> readLocalGzFileCnt(HadoopDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + ".readLocalGzFile Start!");
 
-        String result = ""; // GzFile 내용 결과
-
+        // 읽을 라인수
+        // 예 : 값이 10이면 10줄만 읽기
         long readCnt = pDTO.getLineCnt();
-
         log.info("readCnt : " + readCnt);
 
         List<String> logList = new ArrayList<>(); //로그 정보를 저장할 객체
@@ -68,13 +66,8 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
                     break;
                 }
             }
-
-            // 읽은 전체 내용을 String 타입으로 변경하기
-//            result = gzContents.toString();
-
         } catch (IOException e) {
             throw new RuntimeException("Gzip 파일 읽기 실패했습니다.", e);
-
         }
 
         gzis.close();
@@ -94,8 +87,6 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
     @Override
     public List<String> readLocalGzFileIP(HadoopDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + ".readLocalGzFile Start!");
-
-        String result = ""; // GzFile 내용 결과
 
         // 예 : c:/hadoop_data/access_log.gz
         String localFile = CmmUtil.nvl(pDTO.getLocalUploadPath()) +
@@ -126,7 +117,7 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
             String line; // 읽은 라인의 값이 저장되는 변수
 
             String exp = CmmUtil.nvl(pDTO.getRegExp()); //정규식 표현식
-            log.info("exp : " + exp); // 예 : 10\.223\.[0-9]{1,3}\.[0-9]{1,3} => 10.56.xxx.xxx 값만 찾음
+            log.info("exp : " + exp); // 예 : 10\.56\.[0-9]{1,3}\.[0-9]{1,3} => 10.56.xxx.xxx 값만 찾음
 
             while ((line = lineReader.readLine()) != null) {
 
@@ -137,19 +128,11 @@ public class LocalGzFileReadService extends AbstractHadoopConf implements ILocal
                 // 자바 정규식은 CentOS의 grep 명령어와 달리 비교대상과 정규식 패턴이 일치해야만 탐지 가능
                 // 즉, 로그에서 IP를 추출하고, 그 IP에 대한 정규식 패턴이 맞는지 체크함
                 if (Pattern.matches(exp, ip)) {
-                    logList.add(line);
-
-//                    gzContents.append(line + "\n"); // 비교는 IP랑 하지만 실제 HDFS에 업로드내용은 한줄 전체
-
+                    logList.add(line); // 정규식 패턴에 맞는 로그 라인 전체 List<String> 객체에 저장
                 }
             }
-
-            // 읽은 전체 내용을 String 타입으로 변경하기
-            result = gzContents.toString();
-
         } catch (IOException e) {
             throw new RuntimeException("Gzip 파일 읽기 실패했습니다.", e);
-
         }
 
         gzis.close();

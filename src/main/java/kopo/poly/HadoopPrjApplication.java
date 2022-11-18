@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 public class HadoopPrjApplication implements CommandLineRunner {
 
-    // 재네릭(Generic) 타입 활용하여 동일한 interface를 구현했을 때 객체 구분함
     private final Exam01 exam01;
 
     private final Exam02 exam02;
