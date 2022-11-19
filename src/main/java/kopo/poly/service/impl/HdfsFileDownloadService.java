@@ -43,10 +43,11 @@ public class HdfsFileDownloadService extends AbstractHadoopConf
         if (hdfs.exists(path)) { // 하둡분산파일시스템에 파일 존재하면...
 
             // 다운르도 파일명 예 : c:/hadoop_data/hdfs_access_log.gz
-            Path localPath = new Path(CmmUtil.nvl(pDTO.getLocalUploadPath()));
+            Path localPath = new Path(CmmUtil.nvl(pDTO.getLocalUploadPath())
+                    + "/" + CmmUtil.nvl(pDTO.getLocalUploadFileName()));
 
-            log.info("path : "+ path);
-            log.info("localPath : "+ localPath);
+            log.info("path : " + path);
+            log.info("localPath : " + localPath);
             // 업로드된 파일 다운로드하기
             // hadoop fs -get /01/02/access_log.gz c:/hadoop_data/hdfs_access_log.gz
             hdfs.copyToLocalFile(path, localPath);
