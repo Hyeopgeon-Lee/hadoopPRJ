@@ -118,7 +118,7 @@ public class HdfsFileUploadService extends AbstractHadoopConf
 
         contentList.forEach(log -> {
             try {
-                outputStream.writeUTF(log.trim() + "\n");
+                outputStream.writeChars(log + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -57,6 +57,7 @@ public class LocalGzFileReadService implements ILocalGzFileReadService {
 
             while ((line = lineReader.readLine()) != null) {
 
+                log.info("line : "+ line);
                 logList.add(line);
 
                 idx++; // 읽은 라인 횟수 세기

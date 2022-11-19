@@ -77,9 +77,6 @@ public class Exam02 implements IHdfsExam {
 
         String hadoopLog = hdfsFileReadService.readHdfsFile(pDTO);
 
-        log.info("[실습3.결과] HDFS에 저장된 파일 내용 ");
-        log.info(hadoopLog);
-
         pDTO = null;
 
     }
