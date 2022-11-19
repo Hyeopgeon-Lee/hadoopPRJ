@@ -4,13 +4,13 @@ import kopo.poly.dto.HadoopDTO;
 import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.IHdfsFileReadService;
 import kopo.poly.util.CmmUtil;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.springframework.stereotype.Service;
 
-@Log4j2
+@Log4j
 @Service
 public class HdfsFileReadService extends AbstractHadoopConf
         implements IHdfsFileReadService {

@@ -3,7 +3,7 @@ package kopo.poly.service.impl;
 import kopo.poly.dto.HadoopDTO;
 import kopo.poly.service.ILocalGzFileReadService;
 import kopo.poly.util.CmmUtil;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
-@Log4j2
+@Log4j
 @Service
 public class LocalGzFileReadService implements ILocalGzFileReadService {
 

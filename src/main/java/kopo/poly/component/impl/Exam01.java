@@ -4,14 +4,14 @@ import kopo.poly.component.IHdfsExam;
 import kopo.poly.dto.HadoopDTO;
 import kopo.poly.service.impl.HdfsFileUploadService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 
 /**
  * HDFS에 Access_log.gz 파일 업로드 실습 실행을 위한 자바
  */
-@Log4j2
+@Log4j
 @RequiredArgsConstructor
 @Component
 public class Exam01 implements IHdfsExam {

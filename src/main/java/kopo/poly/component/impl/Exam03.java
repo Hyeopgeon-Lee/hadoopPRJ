@@ -6,7 +6,7 @@ import kopo.poly.service.IHdfsFileReadService;
 import kopo.poly.service.IHdfsFileUploadService;
 import kopo.poly.service.ILocalGzFileReadService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * 2. HDFS에 access_log.gz 파일 중 10.56.xxx.xxx 로그만 올리기
  * 3. HDFS에 저장된 파일 내용 보기
  */
-@Log4j2
+@Log4j
 @RequiredArgsConstructor
 @Component
 public class Exam03 implements IHdfsExam {
@@ -43,7 +43,7 @@ public class Exam03 implements IHdfsExam {
         // 내컴퓨터에 존재하는 업로드할 파일 정보
         pDTO.setLocalUploadPath("c:/hadoop_data");
         pDTO.setLocalUploadFileName("access_log.gz");
-        pDTO.setRegExp("10\\.223\\.[0-9]{1,3}\\.[0-9]{1,3}"); // 10.56.xxx.xxx 찾기
+        pDTO.setRegExp("10\\.56\\.[0-9]{1,3}\\.[0-9]{1,3}"); // 10.56.xxx.xxx 찾기
 
         List<String> ipLog = localGzFileReadService.readLocalGzFileIP(pDTO);
 
