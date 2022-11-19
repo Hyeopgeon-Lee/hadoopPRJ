@@ -4,7 +4,7 @@ import kopo.poly.dto.HadoopDTO;
 import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.IHdfsFileUploadService;
 import kopo.poly.util.CmmUtil;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
-@Log4j2
+@Log4j
 @Service
 public class HdfsFileUploadService extends AbstractHadoopConf
         implements IHdfsFileUploadService {
