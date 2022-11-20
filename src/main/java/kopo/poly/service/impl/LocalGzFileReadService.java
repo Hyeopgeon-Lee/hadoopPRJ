@@ -48,9 +48,6 @@ public class LocalGzFileReadService implements ILocalGzFileReadService {
         // 스트림으로 내용을 읽는 경우는 무조건 BufferedReader을 통해 읽자!
         try (BufferedReader lineReader = new BufferedReader(streamReader)) {
 
-            // String 객체보다 처리 속도를 빠르게 하기 위해 StringBuilder 사용
-            StringBuilder gzContents = new StringBuilder();
-
             long idx = 0; //읽은 라인 횟수
 
             String line; // 읽은 라인의 값이 저장되는 변수
@@ -111,9 +108,6 @@ public class LocalGzFileReadService implements ILocalGzFileReadService {
 
         // 스트림으로 내용을 읽는 경우는 무조건 BufferedReader을 통해 읽자!
         try (BufferedReader lineReader = new BufferedReader(streamReader)) {
-
-            // String 객체보다 처리 속도를 빠르게 하기 위해 StringBuilder 사용
-            StringBuilder gzContents = new StringBuilder();
 
             String line; // 읽은 라인의 값이 저장되는 변수
 
