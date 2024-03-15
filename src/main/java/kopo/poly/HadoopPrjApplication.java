@@ -5,12 +5,12 @@ import kopo.poly.component.impl.Exam02;
 import kopo.poly.component.impl.Exam03;
 import kopo.poly.component.impl.Exam04;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@Log4j
+@Slf4j
 @RequiredArgsConstructor
 @SpringBootApplication
 public class HadoopPrjApplication implements CommandLineRunner {

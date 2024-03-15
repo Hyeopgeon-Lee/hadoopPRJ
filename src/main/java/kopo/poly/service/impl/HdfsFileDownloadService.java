@@ -1,18 +1,21 @@
 package kopo.poly.service.impl;
 
 import kopo.poly.dto.HadoopDTO;
-import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.IHdfsFileDownloadService;
 import kopo.poly.util.CmmUtil;
-import lombok.extern.log4j.Log4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.springframework.stereotype.Service;
 
-@Log4j
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class HdfsFileDownloadService extends AbstractHadoopConf
-        implements IHdfsFileDownloadService {
+public class HdfsFileDownloadService implements IHdfsFileDownloadService {
+
+    private final Configuration hadoopConfig;
 
     @Override
     public void downloadHdfsFile(HadoopDTO pDTO) throws Exception {
@@ -20,7 +23,7 @@ public class HdfsFileDownloadService extends AbstractHadoopConf
         log.info(this.getClass().getName() + ".downloadFile Start!");
 
         // CentOS에 설치된 하둡 분산 파일 시스템 연결 및 설정하기
-        FileSystem hdfs = FileSystem.get(this.getHadoopConfiguration());
+        FileSystem hdfs = FileSystem.get(hadoopConfig);
 
         // 다운로드하기 위한 하둡에 저장된 파일의 폴더
         // 예 : /01/02

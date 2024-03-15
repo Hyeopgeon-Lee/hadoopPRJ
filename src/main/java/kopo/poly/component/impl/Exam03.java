@@ -6,7 +6,7 @@ import kopo.poly.service.IHdfsFileReadService;
 import kopo.poly.service.IHdfsFileUploadService;
 import kopo.poly.service.ILocalGzFileReadService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * 2. HDFS에 access_log.gz 파일 중 10.56.xxx.xxx 로그만 올리기
  * 3. HDFS에 저장된 파일 내용 보기
  */
-@Log4j
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class Exam03 implements IHdfsExam {
@@ -50,7 +50,7 @@ public class Exam03 implements IHdfsExam {
         pDTO = null;
 
         log.info("[실습1.결과] Gz로 압축된 파일 내용 중 10.56.xxx.xxx 로그만 올리기");
-        log.info(ipLog);
+        log.info("ipLog : " + ipLog);
 
         log.info("[실습2.] HDFS에 access_log.gz 파일 중 10.56.xxx.xxx 로그만 올리기 ");
 
@@ -59,7 +59,8 @@ public class Exam03 implements IHdfsExam {
         // 하둡에 생성할 파일 정보
         pDTO.setHadoopUploadPath("/01/02"); // 하둡분산파일시스템 업로드 폴더
         pDTO.setHadoopUploadFileName("10.56.xxx.xxx.log"); // 하둡분산파일시스템 업로드 파일
-        pDTO.setContentList(ipLog);; // 하둡분산파일시스템 업로드 파일에 작성될 내용
+        pDTO.setContentList(ipLog);
+        ; // 하둡분산파일시스템 업로드 파일에 작성될 내용
 
         // HDFS에 파일업로드
         hdfsFileUploadService.uploadHdfsFileContents(pDTO);

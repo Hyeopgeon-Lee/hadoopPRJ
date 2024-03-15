@@ -1,19 +1,22 @@
 package kopo.poly.service.impl;
 
 import kopo.poly.dto.HadoopDTO;
-import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.IHdfsFileReadService;
 import kopo.poly.util.CmmUtil;
-import lombok.extern.log4j.Log4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.springframework.stereotype.Service;
 
-@Log4j
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class HdfsFileReadService extends AbstractHadoopConf
-        implements IHdfsFileReadService {
+public class HdfsFileReadService implements IHdfsFileReadService {
+
+    private final Configuration hadoopConfig;
 
     @Override
     public String readHdfsFile(HadoopDTO pDTO) throws Exception {
@@ -21,7 +24,7 @@ public class HdfsFileReadService extends AbstractHadoopConf
         log.info(this.getClass().getName() + ".readHdfsFile Start!");
 
         // 하둡 분산 파일 시스템 객체
-        FileSystem hdfs = FileSystem.get(this.getHadoopConfiguration());
+        FileSystem hdfs = FileSystem.get(hadoopConfig);
 
         // 하둡분산파일시스템에 저장될 파일경로 및 폴더명
         // 예 : hadoop fs -put access_log.gz /01/02/access_log.gz

@@ -6,7 +6,7 @@ import kopo.poly.service.IHdfsFileReadService;
 import kopo.poly.service.IHdfsFileUploadService;
 import kopo.poly.service.ILocalGzFileReadService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * 2. HDFS에 access_log.gz 파일 중 최초 10줄 올리기
  * 3. HDFS에 저장된 파일 내용 보기
  */
-@Log4j
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class Exam02 implements IHdfsExam {

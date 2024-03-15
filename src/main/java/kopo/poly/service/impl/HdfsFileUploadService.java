@@ -1,10 +1,11 @@
 package kopo.poly.service.impl;
 
 import kopo.poly.dto.HadoopDTO;
-import kopo.poly.service.AbstractHadoopConf;
 import kopo.poly.service.IHdfsFileUploadService;
 import kopo.poly.util.CmmUtil;
-import lombok.extern.log4j.Log4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
-@Log4j
+@Slf4j
+@RequiredArgsConstructor
 @Service
-public class HdfsFileUploadService extends AbstractHadoopConf
-        implements IHdfsFileUploadService {
+public class HdfsFileUploadService implements IHdfsFileUploadService {
+
+    private final Configuration hadoopConfig;
 
     @Override
     public void uploadHdfsFile(HadoopDTO pDTO) throws Exception {
@@ -24,7 +27,7 @@ public class HdfsFileUploadService extends AbstractHadoopConf
         log.info(this.getClass().getName() + ".uploadHdfsFile Start!");
 
         // CentOS에 설치된 하둡 분산 파일 시스템 연결 및 설정하기
-        FileSystem hdfs = FileSystem.get(this.getHadoopConfiguration());
+        FileSystem hdfs = FileSystem.get(hadoopConfig);
 
         // 하둡에 파일을 업로드할 폴더
         // 예 : /01/02
@@ -82,7 +85,7 @@ public class HdfsFileUploadService extends AbstractHadoopConf
         log.info("Upload ContentsList Cnt : " + contentList.size());
 
         // CentOS에 설치된 하둡 분산 파일 시스템 연결 및 설정하기
-        hdfs = FileSystem.get(this.getHadoopConfiguration());
+        hdfs = FileSystem.get(hadoopConfig);
 
         // 하둡에 파일을 업로드할 폴더
         // 예 : /01/02
