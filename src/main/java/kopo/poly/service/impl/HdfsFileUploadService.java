@@ -11,7 +11,9 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 
 @Slf4j
@@ -117,15 +119,22 @@ public class HdfsFileUploadService implements IHdfsFileUploadService {
 
         }
 
-        FSDataOutputStream outputStream = hdfs.create(path);
+        hdfs.createNewFile(path); // 파일 새로 생성하기
+
+        FSDataOutputStream outputStream = hdfs.append(path);
+        BufferedWriter br = new BufferedWriter(new OutputStreamWriter(outputStream));
 
         contentList.forEach(log -> {
             try {
-                outputStream.writeChars(log + "\n");
+                br.append(log + "\n");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         });
+        br.close();
+
         outputStream.close();
 
         log.info(this.getClass().getName() + ".uploadHdfsFileContents End!");

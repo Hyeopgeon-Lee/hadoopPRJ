@@ -28,7 +28,8 @@ public class HdfsFileReadService implements IHdfsFileReadService {
 
         // 하둡분산파일시스템에 저장될 파일경로 및 폴더명
         // 예 : hadoop fs -put access_log.gz /01/02/access_log.gz
-        String hadoopFile = CmmUtil.nvl(pDTO.getHadoopUploadPath()) + "/" + CmmUtil.nvl(pDTO.getHadoopUploadFileName());
+        String hadoopFile = CmmUtil.nvl(pDTO.getHadoopUploadPath()) + "/"
+                + CmmUtil.nvl(pDTO.getHadoopUploadFileName());
 
         // 하둡분산파일시스템에 저장가능한 객체로 변환
         Path path = new Path(hadoopFile);
@@ -42,13 +43,20 @@ public class HdfsFileReadService implements IHdfsFileReadService {
             // 하둡분산파일시스템의 파일 읽기
             // FSDataOutputStream 객체는 ByteBufferReadable를 상속하여 구현함
             FSDataInputStream inputStream = hdfs.open(path);
-            readLog = inputStream.readUTF();
-            inputStream.close();
 
+            // 하둡분산파일시스템의 파일 크기만큼 배열 크기 만들기
+            byte[] rawData = new byte[inputStream.available()];
+
+            inputStream.readFully(rawData); // 하둡분산파일시스템의 전체 내용 읽기
+
+            readLog = new String(rawData); // 바이트 배열 구조를 문자열로 변환하기
+
+            inputStream.close();
         }
 
         log.info(this.getClass().getName() + ".readHdfsFile End!");
 
         return readLog;
     }
+
 }
