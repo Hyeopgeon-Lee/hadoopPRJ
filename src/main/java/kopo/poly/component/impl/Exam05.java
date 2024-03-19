@@ -18,7 +18,7 @@ public class Exam05 implements IHdfsExam {
     @Override
     public void doExam() throws Exception {
 
-        log.info("[실습1.] HDFS에 저장된 access_log.gz 파일 다운로드 ");
+        log.info("HDFS에 저장된 access_log.gz 파일 다운로드 ");
 
         HadoopDTO pDTO = new HadoopDTO();
 
@@ -34,7 +34,7 @@ public class Exam05 implements IHdfsExam {
 
         pDTO = null;
 
-        log.info("[실습1.결과] 파일다운로드 완료");
+        log.info("파일다운로드 완료");
 
     }
 
